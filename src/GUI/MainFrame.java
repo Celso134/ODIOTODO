@@ -52,12 +52,12 @@ public class MainFrame extends javax.swing.JFrame {
         passField = new javax.swing.JPasswordField();
         repeatPassField = new javax.swing.JPasswordField();
         typesOfUsers = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
         Botones = new javax.swing.JPanel();
         login = new javax.swing.JButton();
         register = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(530, 410));
         setPreferredSize(new java.awt.Dimension(550, 430));
         setResizable(false);
@@ -191,8 +191,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         typesOfUsers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Operador", "Consultor", "Administrador" }));
 
-        jLabel1.setText("Tipo de usuario");
-
         javax.swing.GroupLayout RegistrationPanelLayout = new javax.swing.GroupLayout(RegistrationPanel);
         RegistrationPanel.setLayout(RegistrationPanelLayout);
         RegistrationPanelLayout.setHorizontalGroup(
@@ -211,13 +209,11 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(repeatPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pass, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(53, 53, 53)
-                        .addGroup(RegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(RegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(userNameTextField)
-                                .addComponent(passField)
-                                .addComponent(repeatPassField, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                            .addComponent(Registraruser)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGroup(RegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(userNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(repeatPassField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(Registraruser)))
                     .addComponent(IniciaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -239,9 +235,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(repeatPass)
                     .addComponent(repeatPassField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(RegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typesOfUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(typesOfUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addGroup(RegistrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IniciaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,10 +345,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void RegistraruserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistraruserActionPerformed
         int result = JOptionPane.showConfirmDialog(null, "Esta seguro?", "InfoBox: " + "confirmar", JOptionPane.OK_CANCEL_OPTION);
-       if(result == JOptionPane.OK_OPTION){
-       registrar();
-       usersManager.guardaUsuario();
-       }
+        if (result == JOptionPane.OK_OPTION) {
+            registrar();
+            usersManager.guardaUsuario();
+        }
     }//GEN-LAST:event_RegistraruserActionPerformed
 
     /**
@@ -392,19 +386,21 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
 
-    public void registrar(){
+    public void registrar() {
         boolean jajatl;
-        if(userNameTextField.getText().equals("") || passField.getText().equals("") || repeatPassField.getText().equals("")){
+        if (userNameTextField.getText().equals("") || passField.getText().equals("") || repeatPassField.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "No se pueden dejar campos en blanco.", "Error en campos", JOptionPane.ERROR_MESSAGE);
-        }if(!(passField.getText().equals(repeatPassField.getText()))){
-        JOptionPane.showMessageDialog(this, "Contraseñas discrepantes.", "Error contraseñas", JOptionPane.ERROR_MESSAGE);
-        }else{
-        jajatl = usersManager.validarUsuario(userNameTextField.getText(), passField.getText());
-        if(jajatl){
-           JOptionPane.showMessageDialog(this, "Nombre de usuario ya está en uso.", "Error nombre de Usuario", JOptionPane.ERROR_MESSAGE);
-        }else{
-            usersManager.agregarUsuario(userNameTextField.getText(), passField.getText(), (typesOfUsers.getSelectedIndex()+1));
-            JOptionPane.showMessageDialog(this, "Usuario creado satisfactoriamente", "Usuario creado", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (!(passField.getText().equals(repeatPassField.getText()))) {
+                JOptionPane.showMessageDialog(this, "Contraseñas discrepantes.", "Error contraseñas", JOptionPane.ERROR_MESSAGE);
+            } else {
+                jajatl = usersManager.validarUsuario(userNameTextField.getText(), passField.getText());
+                if (jajatl) {
+                    JOptionPane.showMessageDialog(this, "Nombre de usuario ya está en uso.", "Error nombre de Usuario", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    usersManager.agregarUsuario(userNameTextField.getText(), passField.getText(), (typesOfUsers.getSelectedIndex() + 1));
+                    JOptionPane.showMessageDialog(this, "Usuario creado satisfactoriamente", "Usuario creado", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }
@@ -420,7 +416,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton exit;
     private javax.swing.JButton iniciarSesion;
     private javax.swing.JLabel inicioSesion;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton login;
     private javax.swing.JPanel loginPanel;

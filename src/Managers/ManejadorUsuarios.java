@@ -49,22 +49,22 @@ public class ManejadorUsuarios {
     }
     public Usuarios.Usuario quitarUsuario(Usuarios.Usuario usuario){return usuario;}
     public void guardaUsuario(){
-         manejadorArchivo = new ManejadorArchivo("Usuarios",false);
-        for(Usuarios.Usuario usuario : usuarios){
+        manejadorArchivo = new ManejadorArchivo("Usuarios", false);
+        for (Usuarios.Usuario usuario : usuarios) {
             manejadorArchivo.escribeLinea(usuario.serializa());
         }
         manejadorArchivo.cerrarArchivo();
     }
     public java.util.ArrayList<Usuarios.Usuario> cargaUsuarios(){
-        String line;
-        Usuarios.Usuario usuario;
-         manejadorArchivo = new ManejadorArchivo("Usuarios",true);
-        while((line = manejadorArchivo.leerLinea()) != null){
-            if((usuario = Usuarios.Usuario.deserializa(line)) != null){
-                usuarios.add(usuario);
-            }
+        try(java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("Usuarios")))){
+                String line;
+                Usuario usuario;
+                while((line = br.readLine()) != null)
+                    if( (usuario = Usuarios.Usuario.deserializa(line)) != null)
+                        usuarios.add(usuario);
+            }catch(java.io.IOException e){
+                e.printStackTrace();
         }
-        manejadorArchivo.cerrarArchivo();
         return usuarios;
     }
 }
