@@ -16,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         usersManager = new ManejadorUsuarios();
+        usersManager.cargaUsuarios();
     }
 
     /**
@@ -57,7 +58,6 @@ public class MainFrame extends javax.swing.JFrame {
         register = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(530, 410));
         setPreferredSize(new java.awt.Dimension(550, 430));
         setResizable(false);
@@ -307,9 +307,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         int result = JOptionPane.showConfirmDialog(null, "Esta seguro?", "InfoBox: " + "confirmar", JOptionPane.OK_CANCEL_OPTION);
-       if(result == JOptionPane.OK_OPTION){
-       System.exit(0);
-       }
+        if (result == JOptionPane.OK_OPTION) {
+            usersManager.guardaUsuario();
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitActionPerformed
 
     private void crearcuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearcuentaActionPerformed

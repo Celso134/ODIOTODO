@@ -36,17 +36,20 @@ public class ManejadorUsuarios {
             case 3:
                 Administrador usuario = new Administrador(name, pass);
                 usuarios.add(usuario);
+                break;
             case 1:
                 Operador usuarioOp = new Operador(name, pass);
                 usuarios.add(usuarioOp);
+                break;
             case 2:
                 Consultor usuarioCo = new Consultor(name,pass);
                 usuarios.add(usuarioCo);
+                break;
         }
     }
     public Usuarios.Usuario quitarUsuario(Usuarios.Usuario usuario){return usuario;}
     public void guardaUsuario(){
-         manejadorArchivo = new ManejadorArchivo("Usuarios",true);
+         manejadorArchivo = new ManejadorArchivo("Usuarios",false);
         for(Usuarios.Usuario usuario : usuarios){
             manejadorArchivo.escribeLinea(usuario.serializa());
         }
